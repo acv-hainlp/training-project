@@ -17,7 +17,8 @@
 
 <body class="w3-light-grey" >
 	@include('layouts.nav')
-
+	
+	@include('layouts.errors')
 	
 	<section style="max-width: 1100px; margin: 0 auto;margin-top:70px">
 		<div class="w3-row">
@@ -30,7 +31,6 @@
 			<!-- Content -->
 			<div class="w3-col l6 ">
 				@yield('content')
-				@include('layouts.errors')
 			</div>
 
 			<!-- Sidebarright -->
@@ -50,3 +50,11 @@
 </html>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<script>
+ 	function confirmbox(event){
+		var r = confirm("Do you want confirm this action?");
+		if (r == false) {
+			event.preventDefault();
+		}
+	}
+</script>

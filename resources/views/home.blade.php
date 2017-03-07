@@ -3,57 +3,68 @@
 @section('title','Home')
 
 @section('content')
-
+	
+	@if(Auth::check())
 	<!-- New Post -->
 	<div class="w3-border w3-round">
-		<form>
+		
+		<form method="post" action="/posts/create" enctype="multipart/form-data">
+			{{csrf_field()}}
 			<header class="w3-container w3-padding-16" >
 				<span><i class="fa fa-edit"></i>&nbsp Write new post</span>
 			</header>
 
-			<textarea class="w3-input w3-border-0" placeholder="Write Something.."></textarea>
+			<textarea class="w3-input w3-border-0" placeholder="Write Something.." name="body"></textarea>
 
 			<footer class="w3-container w3-display-container" style="padding-top: 20px">
 
 
 					<input class="w3-btn w3-blue w3-right w3-small w3-round" type="submit" value="Publish">
 
-					<a href="" id="image-upload" onclick="chooseFile()" class="w3-right w3-text-gray w3-hover-text-blue w3-large w3-padding-right" style="padding-top: 8px"><i class="fa fa-camera"></i></a>
+					<a href="#" id="image-upload" onclick="chooseFile()" class="w3-right w3-text-gray w3-hover-text-blue w3-large w3-padding-right" style="padding-top: 8px"><i class="fa fa-camera"></i></a>
 
-					<input id="fileInput" type="file" class="w3-input" accept="image/*" name="file" style="display: none">
+					<input id="fileInput" type="file" class="w3-input" accept="image/*" name="image" style="display: none">
 			</footer>
-
 		</form>
 		
+		
 	</div>
-
+	@endif
 
 	<!--End New Post -->
 
 	<!-- All Post -->
+	@foreach ($posts as $post)
 	<div class="w3-margin-top w3-round w3-border w3-white">
 		<div class="w3-bar">
-			<a class="w3-bar-item" style="padding-top: 16px">
-				<img src="https://scontent.fhan2-1.fna.fbcdn.net/v/t1.0-1/p50x50/15036199_1069914539789139_6878978061916064121_n.jpg?oh=845f6869a3a8a95d56fb6eb26bf9d06e&oe=5939AEC7">
+			<a class="w3-bar-item" style="padding-top: 20px">
+				<img src="{{$post->user->avatar_url}}" height="50px">
 			</a>
-			<a class="w3-bar-item" style="padding-top: 16px" >
-				<span><b>Hai Nguyen</b></span><br>
-				<span><i>2 Hour ago</i></b></span>
+			<a class="w3-bar-item" style="padding-top: 20px" >
+				<span><b>{{$post->user->name}}</b></span><br>
+				<span><i>{{ $post->created_at->diffForHumans() }}</i></b></span>
 			</a>
 		</div>
 		<div class="w3-container">
-			<hr>
-			<p>Lorem lipsum emet</p>
+			<p>{{ $post->body }}</p>
 		</div>
+
+		<!-- Post Image -->
+		@if($post->post_image)
 		<div class="w3-container" >
-			<img src="https://www.taylorguitars.com/sites/default/files/TaylorGuitars-browse-acoustic.jpg" width="100%">
+			<img src="{{ $post->post_image }}" width="100%">
 		</div>
+		@endif
+		<!-- End Post Image -->
 
 		<!-- Comment -->
 			<div class="w3-container w3-padding-bottom">
 				<hr>
 				<a href="" class=""><i class="fa fa-thumbs-o-up"></i>&nbsp;Like</a>&nbsp;
 				<a href="#" onclick="showCommentInput();"><i class="fa fa-comment-o"></i>&nbsp;Comment</a>
+
+				<a href="/posts/{{ $post->id }}/edit" class="w3-right" onclick="showCommentInput();"><i class="fa fa-edit "></i>&nbsp;Edit</a>
+				<a href="/posts/{{ $post->id }}/delete" onclick="confirmbox(event)" class="w3-right"  style="margin-right: 16px"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp;
 			</div>
 
 			<!-- Input Comment -->
@@ -73,10 +84,8 @@
 
 		<!-- End Comment -->
 	</div>
-
-
-
 	<!-- End All Post -->
+	@endforeach
 
 
 

@@ -4,8 +4,8 @@
 		<a href="/logout" class="w3-bar-item w3-hover-indigo w3-padding-16 w3-right"><b>Logout</b></a>
 		<a href="/home" class="w3-bar-item w3-hover-indigo w3-padding-16 w3-right"><b>Home</b></a>
 		<a href="#" class="w3-bar-item w3-hover-indigo w3-padding-16 w3-right">
-			<img src="/upload/imgs/avatar-default.gif" height="20px">
-			<span><b>Hai Nguyen</b></span>
+			<img src="{{ Auth::user()->avatar_url	}}" height="20px">
+			<span><b>{{ Auth::user()->name }}</b></span>
 		</a>
 		@else
 		<a href="/login" class="w3-bar-item w3-hover-indigo w3-padding-16 w3-right">Login</a>
@@ -17,6 +17,6 @@
 	    	<input type="text" class="w3-input w3-round" style="height: 30px;width: 500px">
 	    </a>
 	    <a class="w3-bar-item w3-padding-16 w3-large"><i class="fa fa-search"></i></a>
-	</div>
 
+	</div>
 </div>
