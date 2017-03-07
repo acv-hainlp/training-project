@@ -41,7 +41,7 @@ class PostsController extends Controller
 
             $file->move(public_path('upload/imgs/posts/'),$filename); //save file
 
-            $post->post_image = 'upload/imgs/posts/'.$filename; //update record
+            $post->post_image = '/upload/imgs/posts/'.$filename; //update record
             $post->save(); //save record
         }
 
@@ -54,5 +54,31 @@ class PostsController extends Controller
         Post::destroy($id);
 
         return redirect()->home();
+    }
+
+    public function show($id)
+    {
+        $post = Post::find($id);
+
+        return view('posts.show',compact('post'));
+    }
+
+    public function update($id)
+    {
+        //find post
+        $post = Post::find($id);
+
+        //validate 
+        $this->validate(request(),[
+            'body' => 'required|min:2',
+            ]);
+
+        // update
+        $post->body = request('body');
+        $post->save();
+
+        //redirect
+        return back();
+
     }
 }

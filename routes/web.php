@@ -27,4 +27,6 @@ Route::get('posts','PostsController@index');
 Route::get('posts/create','PostsController@create');
 Route::post('posts/create','PostsController@store');
 
+Route::get('posts/{id}','PostsController@show');
+Route::post('posts/{id}/edit','PostsController@update');
 Route::get('posts/{id}/delete','PostsController@destroy');

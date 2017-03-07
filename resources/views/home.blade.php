@@ -62,9 +62,12 @@
 				<hr>
 				<a href="" class=""><i class="fa fa-thumbs-o-up"></i>&nbsp;Like</a>&nbsp;
 				<a href="#" onclick="showCommentInput();"><i class="fa fa-comment-o"></i>&nbsp;Comment</a>
-
-				<a href="/posts/{{ $post->id }}/edit" class="w3-right" onclick="showCommentInput();"><i class="fa fa-edit "></i>&nbsp;Edit</a>
+			@if(Auth::check())	
+				@if (Auth::user()->id == $post->user->id || Auth::user()->role_id == 1)
+				<a href="/posts/{{ $post->id }}" class="w3-right"><i class="fa fa-edit "></i>&nbsp;Edit</a>
 				<a href="/posts/{{ $post->id }}/delete" onclick="confirmbox(event)" class="w3-right"  style="margin-right: 16px"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp;
+				@endif
+			@endif	
 			</div>
 
 			<!-- Input Comment -->
