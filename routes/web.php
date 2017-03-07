@@ -40,7 +40,3 @@ Route::get('/comments/{id}/delete','CommentsController@destroy');
 
 Route::get('/admin','AdminController@index');
 
-Route::controller('datatables', 'DatatablesController', [
-    'anyData'  => 'datatables.data',
-    'getIndex' => 'datatables',
-]);
