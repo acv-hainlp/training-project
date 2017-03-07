@@ -10,7 +10,7 @@
 </head>
 <style type="text/css">
 	a {
-		text-decoration:none
+		text-decoration:none !important
 	}
 
 </style>
@@ -24,18 +24,19 @@
 			<!-- Sidebar left-->
 			<div class="w3-col l3">
 				@include('layouts.sidebarleft')
-				none
+				&nbsp;
 			</div>
 
 			<!-- Content -->
 			<div class="w3-col l6 ">
 				@yield('content')
+				@include('layouts.errors')
 			</div>
 
 			<!-- Sidebarright -->
 			<div class="w3-col l3">
 				@include('layouts.sidebarright')
-				
+				&nbsp;
 			</div>
 		</div>
 
@@ -47,3 +48,5 @@
 
 </body>
 </html>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>

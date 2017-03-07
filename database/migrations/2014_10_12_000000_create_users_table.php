@@ -20,6 +20,9 @@ class CreateUsersTable extends Migration
             $table->string('password');
             $table->rememberToken();
             $table->timestamps();
+            $table->integer('role-id')->default('2');
+            $table->string('avatar-url')->default('/upload/imgs/avatar-default.gif');
+
         });
     }
 
