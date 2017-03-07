@@ -34,7 +34,14 @@ class SessionsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        if(!auth()->attempt(request(['email','password'])))
+        {
+            return back()->withErrors([
+                'message' => 'Wrong email or password',
+                ]);
+        }
+
+        return redirect()->home();
     }
 
     /**
@@ -77,8 +84,10 @@ class SessionsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy()
     {
-        //
+        auth()->logout();
+
+        return redirect()->home();
     }
 }
