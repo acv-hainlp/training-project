@@ -6,6 +6,12 @@ use App\Post;
 
 class PostsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth',['except' => ['index']]); //if not login, only index, show
+        // $this->middleware('auth'); //if not login, can action anything
+    }
+
     public function index()
     {
         $posts = Post::latest()->get(); //send post

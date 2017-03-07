@@ -37,3 +37,5 @@ Route::post('/comments/create','CommentsController@store');
 Route::get('/comments/{id}/delete','CommentsController@destroy');
 
 //admin Controller
+
+Route::get('/admin','AdminController@index');

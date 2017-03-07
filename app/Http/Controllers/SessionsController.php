@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 
 class SessionsController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('guest',['except'=>['destroy']]); //if not guest, only index, show
+        // $this->middleware('auth'); //if not login, can action anything
+    }    
     /**
      * Display a listing of the resource.
      *
