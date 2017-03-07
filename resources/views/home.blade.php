@@ -60,7 +60,7 @@
 		<!-- Comment -->
 			<div class="w3-container w3-padding-bottom">
 				<hr>
-				<a href="" class=""><i class="fa fa-thumbs-o-up"></i>&nbsp;Like</a>&nbsp;
+				<a href="#" class=""><i class="fa fa-thumbs-o-up"></i>&nbsp;Like</a>&nbsp;
 				<a href="#" onclick="showCommentInput();"><i class="fa fa-comment-o"></i>&nbsp;Comment</a>
 			@if(Auth::check())	
 				@if (Auth::user()->id == $post->user->id || Auth::user()->role_id == 1)
@@ -68,21 +68,33 @@
 				<a href="/posts/{{ $post->id }}/delete" onclick="confirmbox(event)" class="w3-right"  style="margin-right: 16px"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp;
 				@endif
 			@endif	
-			</div>
 
-			<!-- Input Comment -->
-			<form class="w3-container w3-row" id="comment" hidden>
-				<input type="text" name="comment" placeholder="Your comment is here" class="w3-input w3-twothird w3-border">
-				<input type="submit" value="Comment" class="w3-third w3-btn-block w3-light-grey w3-padding-8">
-			</form>
-			<!-- End Input Comment -->
+				@if(Auth::check())
+				<!-- Input Comment -->
+				<form class="w3-row w3-margin-top" id="comment" action="/comments/create" method="post" >
+					{{csrf_field()}}
+					<input type="text" name="post_id" value="{{$post->id}}" hidden>
+					<input type="text" name="body" name="comment" placeholder="Your comment is here" class="w3-input w3-twothird w3-border">
+					<input type="submit" value="Comment" class="w3-third w3-btn-block w3-light-grey w3-padding-8">
+				</form>
+				<!-- End Input Comment -->	
+				@endif
+
+			</div>
 
 			<!-- Show Comment -->
-			<div class="w3-container">
-				<a href="#" class="w3-text-blue"><b>Hai Nguyen</b></a>
-				<p>Comment here Comment here  Comment here Comment hereComment hereComment here</p>
-			</div>
-				
+			
+				@foreach ($post->comment as $comment)
+				<div class="w3-container w3-padding-4">
+					<a href="#" class="w3-text-blue"><b>{{$comment->user->name}}: </b></a>
+					<span>{{ $comment->body }}</span>
+					@if(Auth::check())
+						@if(Auth::user()->id == $comment->user->id || Auth::user()->role_id == 1)
+							<a href="/comments/{{$comment->id}}/delete" onclick="confirmbox(event)" class="w3-right"><i class="fa fa-trash-o "></i></a>
+						@endif
+					@endif
+				</div>
+				@endforeach
 			<!-- End Show Comment -->
 
 		<!-- End Comment -->
@@ -102,6 +114,6 @@
 
    function showCommentInput ()
    {
-   		$("#comment").show();
+
    }
 </script>

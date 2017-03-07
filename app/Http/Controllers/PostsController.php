@@ -8,8 +8,8 @@ class PostsController extends Controller
 {
     public function index()
     {
-        $posts = Post::latest()->get();
-
+        $posts = Post::latest()->get(); //send post
+                
         return view('home', compact('posts'));
     }
 
