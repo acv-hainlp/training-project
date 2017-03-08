@@ -37,6 +37,16 @@ Route::post('/comments/create','CommentsController@store');
 Route::get('/comments/{id}/delete','CommentsController@destroy');
 
 //admin Controller
-
 Route::get('/admin','AdminController@index');
+
+Route::get('/admin/users','AdminController@users');
+Route::get('/admin/usersdata','AdminController@usersData');
+
+Route::get('/admin/posts','AdminController@posts');
+Route::get('/admin/postsdata','AdminController@postsData');
+
+Route::get('/admin/comments','AdminController@comments');
+Route::get('/admin/commentsdata','AdminController@commentsData');
+
+
 
