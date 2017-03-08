@@ -8,7 +8,8 @@
 	<!-- New Post -->
 	<div class="w3-border w3-round">
 		
-		<form method="post" action="/posts/create" enctype="multipart/form-data">
+		<form method="post" action="{{ route('posts.store')}} " enctype="multipart/form-data">
+
 			{{csrf_field()}}
 			<header class="w3-container w3-padding-16" >
 				<span><i class="fa fa-edit"></i>&nbsp Write new post</span>
@@ -64,8 +65,14 @@
 				<a href="#" onclick="showCommentInput();"><i class="fa fa-comment-o"></i>&nbsp;Comment</a>
 			@if(Auth::check())	
 				@if (Auth::user()->id == $post->user->id || Auth::user()->role_id == 1)
-				<a href="/posts/{{ $post->id }}" class="w3-right"><i class="fa fa-edit "></i>&nbsp;Edit</a>
-				<a href="/posts/{{ $post->id }}/delete" onclick="confirmbox(event)" class="w3-right"  style="margin-right: 16px"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp;
+				<form action="{{ route('posts.destroy',['id'=>$post->id]) }}" method="post" class="w3-right">
+					{{ method_field('DELETE') }}
+					{{ csrf_field() }}
+					<a href="{{ route('posts.show',['id'=>$post->id ])}}" class="w3-right"><i class="fa fa-edit "></i>&nbsp;Edit</a>
+					<a href="#"  onclick="confirmbox(event);this.parentNode.submit()" class="w3-right" style="margin-right: 16px"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp;</a>
+					<!-- <button class="w3-button w3-right" type="submit" onclick="confirmbox(event)">Delete</button> -->
+					<!-- <a href="{{ route('posts.destroy',['id'=>$post->id]) }}"onclick="confirmbox(event)" class="w3-right"  style="margin-right: 16px"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp; -->
+				</form>
 				@endif
 			@endif	
 

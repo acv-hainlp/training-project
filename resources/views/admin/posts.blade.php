@@ -2,6 +2,9 @@
 @section('title','All Posts')
 @section('content')
 <div class="w3-container">
+    <a href="{{ route('postcsv') }}">Save to CSV</a>
+</div>
+<div class="w3-container">
     <table class="table table-bordered" id="users-table">
         <thead>
             <tr>
