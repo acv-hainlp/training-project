@@ -28,8 +28,8 @@
 
 			
 		<div class="w3-border w3-round">
-		<form method="post" action="/posts/{{$post->id}}/edit">
-		
+		<form action="{{	route('posts.update', ['id'=>$post->id] )}}" method="post">
+			{{ method_field('PATCH') }}
 			{{csrf_field()}}
 
 			<textarea class="w3-input w3-border w3-border-0" placeholder="Write Something.." name="body"></textarea>

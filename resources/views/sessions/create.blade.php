@@ -4,7 +4,7 @@
 
 @section('content')
 
-<form class="w3-container" action="/login" method="post">
+<form class="w3-container" action="{{ route('login.store') }}" method="post">
 	{{ csrf_field()}}
 	<div class="w3-section">
 

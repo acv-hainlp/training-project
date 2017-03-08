@@ -78,7 +78,7 @@
 
 				@if(Auth::check())
 				<!-- Input Comment -->
-				<form class="w3-row w3-margin-top" id="comment" action="/comments/create" method="post" >
+				<form class="w3-row w3-margin-top" id="comment" action="{{ route('comments.store')}}" method="post" >
 					{{csrf_field()}}
 					<input type="text" name="post_id" value="{{$post->id}}" hidden>
 					<input type="text" name="body" name="comment" placeholder="Your comment is here" class="w3-input w3-twothird w3-border">
@@ -97,7 +97,11 @@
 					<span>{{ $comment->body }}</span>
 					@if(Auth::check())
 						@if(Auth::user()->id == $comment->user->id || Auth::user()->role_id == 1)
-							<a href="/comments/{{$comment->id}}/delete" onclick="confirmbox(event)" class="w3-right"><i class="fa fa-trash-o "></i></a>
+						<form action="{{ route('comments.destroy', ['id' => $comment->id]) }}" method="post" class="w3-right">
+							{{method_field('DELETE')}}
+							{{ csrf_field() }}
+							<a href="#" onclick="confirmbox(event);this.parentNode.submit()" ><i class="fa fa-trash-o "></i></a>
+						</form>	
 						@endif
 					@endif
 				</div>

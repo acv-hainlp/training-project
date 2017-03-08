@@ -4,7 +4,7 @@
 
 @section('content')
 
-<form class="w3-container" action="/register" method="post">
+<form class="w3-container" action="{{ route('register.store') }}" method="post">
 	{{ csrf_field() }}
 	<div class="w3-section">
 		<label><b>Name</b></label>

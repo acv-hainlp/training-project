@@ -8,18 +8,24 @@
 | Here is where you can register web routes for your application. These
 | routes are loaded by the RouteServiceProvider within a group which
 | contains the "web" middleware group. Now create something great!
-|
+
+
+|	php artisan route:list 
 */
 
 Route::get('/', 'PostsController@index')->name('home');
-Route::get('home', 'PostsController@index')->name('home');
 
-Route::get('/register','RegisterController@create');
-Route::post('/register','RegisterController@store');
 
-Route::get('/login','SessionsController@create');
-Route::post('/login','SessionsController@store');
-Route::get('/logout','SessionsController@destroy');
+//register controller
+Route::resource('register','RegisterController');
+// Route::get('/register','RegisterController@create');
+// Route::post('/register','RegisterController@store');
+
+//sessions Controller
+Route::resource('/login','SessionsController');
+// Route::get('/login','SessionsController@create');
+// Route::post('/login','SessionsController@store');
+// Route::get('/logout','SessionsController@destroy');
 
 //post controller
 
@@ -35,25 +41,43 @@ Route::resource('/posts','PostsController');
 
 //Comment Controller
 
-Route::post('/comments/create','CommentsController@store');
-Route::get('/comments/{id}/delete','CommentsController@destroy');
+Route::resource('/comments','CommentsController');
+// Route::post('/comments/create','CommentsController@store');
+// Route::get('/comments/{id}/delete','CommentsController@destroy');
 
 //admin Controller
-Route::get('/admin','AdminController@index')->name('admin');
 
-Route::get('/admin/users','AdminController@users');
-Route::get('/admin/usersdata','AdminController@usersData');
+Route::group(['middleware' => 'admin','prefix' =>'admin',],function(){ //middleware with router
 
-Route::get('/admin/posts','AdminController@posts');
-Route::get('/admin/postsdata','AdminController@postsData');
-Route::get('/admin/posts/csv','AdminController@postsExcel')->name('postcsv');
+	Route::get('/','AdminController@index')->name('admin');
+	Route::get('users','AdminController@users');
+	Route::get('usersdata','AdminController@usersData');
+
+	Route::get('posts','AdminController@posts');
+	Route::get('postsdata','AdminController@postsData');
+	Route::get('posts/csv','AdminController@postsExcel')->name('postcsv');
 
 
-Route::get('/admin/comments','AdminController@comments');
-Route::get('/admin/commentsdata','AdminController@commentsData');
+	Route::get('comments','AdminController@comments');
+	Route::get('commentsdata','AdminController@commentsData');
+
+});
+
+// Route::get('/admin','AdminController@index')->name('admin');
+
+// Route::get('/admin/users','AdminController@users');
+// Route::get('/admin/usersdata','AdminController@usersData');
+
+// Route::get('/admin/posts','AdminController@posts');
+// Route::get('/admin/postsdata','AdminController@postsData');
+// Route::get('/admin/posts/csv','AdminController@postsExcel')->name('postcsv');
+
+
+// Route::get('/admin/comments','AdminController@comments');
+// Route::get('/admin/commentsdata','AdminController@commentsData');
 
 //export csv
 
-Route::get('/csv','CsvController@excel');
+Route::get('/csv','CsvController@excel')->name('csv'); //test excel
 
 
