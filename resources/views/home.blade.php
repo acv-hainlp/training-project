@@ -36,7 +36,7 @@
 
 	<!-- All Post -->
 	@foreach ($posts as $post)
-	<div class="w3-margin-top w3-round w3-border w3-white">
+	<div class="w3-margin-top w3-round w3-border w3-white" id="post-{{ $post->id }}">
 		<div class="w3-bar">
 			<a class="w3-bar-item" style="padding-top: 20px">
 				<img src="{{$post->user->avatar_url}}" height="50px">
@@ -65,14 +65,17 @@
 				<a href="#" onclick="showCommentInput(event,$(this));"><i class="fa fa-comment-o"></i>&nbsp;Comment</a>
 			@if(Auth::check())	
 				@if (Auth::user()->id == $post->user->id || Auth::user()->role_id == 1)
-				<form action="{{ route('posts.destroy',['id'=>$post->id]) }}" method="post" class="w3-right">
+				<!-- <form action="{{ route('posts.destroy',['id'=>$post->id]) }}" method="post" class="w3-right">
 					{{ method_field('DELETE') }}
 					{{ csrf_field() }}
 					<a href="{{ route('posts.show',['id'=>$post->id ])}}" class="w3-right"><i class="fa fa-edit "></i>&nbsp;Edit</a>
 					<a href="#"  onclick="confirmbox(event);this.parentNode.submit()" class="w3-right" style="margin-right: 16px"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp;</a>
 					<!-- <button class="w3-button w3-right" type="submit" onclick="confirmbox(event)">Delete</button> -->
-					<!-- <a href="{{ route('posts.destroy',['id'=>$post->id]) }}"onclick="confirmbox(event)" class="w3-right"  style="margin-right: 16px"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp; -->
-				</form>
+				<!-- </form> -->
+					<a href="{{ route('posts.show',['id'=>$post->id ])}}" class="w3-right"><i class="fa fa-edit "></i>&nbsp;Edit</a>
+
+					<a href="#"onclick="deletePost(event,$(this))" data-id="{{ $post->id }}" class="w3-right w3-margin-right" data-token="{{ csrf_token() }}" ><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp;
+
 				@endif
 			@endif	
 
@@ -125,7 +128,44 @@
 
    function showCommentInput(event,obj)
    {	
-   		event.preventDefault();
-   		obj.parent().find(".w3-row").toggle();
+   		event.preventDefault(); //Stop <a> href action
+   		obj.parent().find("#comment").toggle(); // find parent of obj
    }
+
+   function deletePost(event,obj) {
+		event.preventDefault(); //Stop <a> href action
+
+		//check user confirm
+		var r = confirm("Do you want confirm this action?");
+		if (r == false) {
+			event.preventDefault(); //if choose no -> stop event
+		} else { //if choose yes -> continue
+
+			var id = obj.data("id"); //save data-id value to id
+       		var token = obj.data("token"); //save data-token value to token
+
+			$.ajax(
+	        {
+	            url: "posts/"+id,
+	            type: 'DELETE',
+	            dataType: "JSON",
+	            data: {
+	                "id": id,
+	                "_method": 'DELETE',
+	                "_token": token,
+	            },
+	            success: function ()
+	            {
+	            	obj.parents().find("#post-"+id).hide(500,function(){
+	            		this.remove(); // find #post-{id} to hide and remove
+	            	});
+	                console.log("Post delete"); //debug
+	            }
+	        });	
+		}
+        
+    }
+
+
+   
 </script>

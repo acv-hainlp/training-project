@@ -59,7 +59,11 @@ class PostsController extends Controller
     {
         Post::destroy($id);
 
-        return redirect()->home();
+        return response()->json([
+            'success' => 'Record has been deleted successfully!'
+        ]);
+        
+        // return redirect()->home();
     }
 
     public function show($id)
