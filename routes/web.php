@@ -1,5 +1,5 @@
 <?php
-
+use App\Task;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -81,3 +81,57 @@ Route::group(['middleware' => 'admin','prefix' =>'admin',],function(){ //middlew
 Route::get('/csv','CsvController@excel')->name('csv'); //test excel
 
 
+// test ajax
+
+// Route::get('/ajax', function(){
+// 	return view('ajax');
+// });
+
+// Route::get('/getRequest',function ()
+// {
+// 	if(Request::ajax()){
+// 		return 'Request Load haha';
+// 	}
+// });
+
+// Route::post('/register',function ()
+// {
+// 	if(Request::ajax()){
+// 		return Response::json(Request::all());
+// 	}
+// });
+
+// Route::get('/tasks/{task_id?}',function($task_id){
+//     $task = Task::find($task_id);
+
+//     return Response::json($task);
+// });
+
+// Route::post('/tasks',function(Request $request){
+//     $task = Task::create($request->all());
+
+//     return Response::json($task);
+// });
+
+// Route::put('/tasks/{task_id?}',function(Request $request,$task_id){
+//     $task = Task::find($task_id);
+
+//     $task->task = $request->task;
+//     $task->description = $request->description;
+
+//     $task->save();
+
+//     return Response::json($task);
+// });
+
+// Route::delete('/tasks/{task_id?}',function($task_id){
+//     $task = Task::destroy($task_id);
+
+//     return Response::json($task);
+// });
+
+// Route::get('/', function () {
+//     $tasks = Task::all();
+
+//     return View::make('welcome')->with('tasks',$tasks);
+// });
