@@ -37,9 +37,10 @@
 
 				@endif
 
-				@include('posts.comment',['post'=>$post])
+			@endif	
 
-		@endif	
+		@include('posts.comment',['post'=>$post])
+
 			
 		<!-- End Post Image -->
 
