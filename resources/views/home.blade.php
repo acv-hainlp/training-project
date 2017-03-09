@@ -32,92 +32,11 @@
 	</div>
 	@endif
 
-	<!--End New Post -->
 
 	<!-- All Post -->
 	@foreach ($posts as $post)
-	<div class="w3-margin-top w3-round w3-border w3-white" id="post-{{ $post->id }}">
-		<div class="w3-bar">
-			<a class="w3-bar-item" style="padding-top: 20px">
-				<img src="{{$post->user->avatar_url}}" height="50px">
-			</a>
-			<a class="w3-bar-item" style="padding-top: 20px" >
-				<span><b>{{$post->user->name}}</b></span><br>
-				<span><i>{{ $post->created_at->diffForHumans() }}</i></b></span>
-			</a>
-		</div>
-		<div class="w3-container">
-			<p>{{ $post->body }}</p>
-		</div>
-
-		<!-- Post Image -->
-		@if($post->post_image)
-		<div class="w3-container" >
-			<img src="{{ $post->post_image }}" width="100%">
-		</div>
-		@endif
-		<!-- End Post Image -->
-
-		<!-- Comment -->
-			<div class="w3-container w3-padding-bottom">
-				<hr>
-				<a href="#" class=""><i class="fa fa-thumbs-o-up"></i>&nbsp;Like</a>&nbsp;
-				<a href="#" onclick="showCommentInput(event,$(this));"><i class="fa fa-comment-o"></i>&nbsp;Comment</a>
-			@if(Auth::check())	
-				@if (Auth::user()->id == $post->user->id || Auth::user()->role_id == 1)
-				<!-- <form action="{{ route('posts.destroy',['id'=>$post->id]) }}" method="post" class="w3-right">
-					{{ method_field('DELETE') }}
-					{{ csrf_field() }}
-					<a href="{{ route('posts.show',['id'=>$post->id ])}}" class="w3-right"><i class="fa fa-edit "></i>&nbsp;Edit</a>
-					<a href="#"  onclick="confirmbox(event);this.parentNode.submit()" class="w3-right" style="margin-right: 16px"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp;</a>
-					<!-- <button class="w3-button w3-right" type="submit" onclick="confirmbox(event)">Delete</button> -->
-				<!-- </form> -->
-					<a href="{{ route('posts.show',['id'=>$post->id ])}}" class="w3-right"><i class="fa fa-edit "></i>&nbsp;Edit</a>
-
-					<a href="#"onclick="deletePost(event,$(this))" data-id="{{ $post->id }}" class="w3-right w3-margin-right" data-token="{{ csrf_token() }}" ><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp;
-
-				@endif
-			@endif	
-
-				@if(Auth::check())
-				<!-- Input Comment -->
-				<form class="w3-row w3-margin-top" id="comment" action="{{ route('comments.store')}}" method="post" hidden>
-					{{csrf_field()}}
-					<input type="text" name="post_id" value="{{$post->id}}" hidden>
-					<input type="text" name="body" name="comment" placeholder="Your comment is here" class="w3-input w3-twothird w3-border">
-					<input type="submit" value="Comment" class="w3-third w3-btn-block w3-light-grey w3-padding-8">
-				</form>
-				<!-- End Input Comment -->	
-				@endif
-
-			</div>
-
-			<!-- Show Comment -->
-			
-				@foreach ($post->comment as $comment)
-				<div class="w3-container w3-padding-4">
-					<a href="#" class="w3-text-blue"><b>{{$comment->user->name}}: </b></a>
-					<span>{{ $comment->body }}</span>
-					@if(Auth::check())
-						@if(Auth::user()->id == $comment->user->id || Auth::user()->role_id == 1)
-						<form action="{{ route('comments.destroy', ['id' => $comment->id]) }}" method="post" class="w3-right">
-							{{method_field('DELETE')}}
-							{{ csrf_field() }}
-							<a href="#" onclick="confirmbox(event);this.parentNode.submit()" ><i class="fa fa-trash-o "></i></a>
-						</form>	
-						@endif
-					@endif
-				</div>
-				@endforeach
-			<!-- End Show Comment -->
-
-		<!-- End Comment -->
-	</div>
-	<!-- End All Post -->
+		@include('posts.post',['post'=>$post])
 	@endforeach
-
-
-
 
 @endsection
 
@@ -141,29 +60,57 @@
 			event.preventDefault(); //if choose no -> stop event
 		} else { //if choose yes -> continue
 
-			var id = obj.data("id"); //save data-id value to id
+			var id = obj.data("id"); //save data-id value to id, use to html remove
        		var token = obj.data("token"); //save data-token value to token
+       		var urlroute = obj.attr("href");
 
 			$.ajax(
 	        {
-	            url: "posts/"+id,
+	            url: urlroute,
 	            type: 'DELETE',
 	            dataType: "JSON",
 	            data: {
-	                "id": id,
+	                // "id": id, 
 	                "_method": 'DELETE',
 	                "_token": token,
 	            },
-	            success: function ()
+	            success: function (msg)
 	            {
 	            	obj.parents().find("#post-"+id).hide(500,function(){
 	            		this.remove(); // find #post-{id} to hide and remove
 	            	});
-	                console.log("Post delete"); //debug
+	                console.log(msg); //debug
 	            }
 	        });	
 		}
         
+    }
+
+    function commentCreate(event,obj) {
+    	event.preventDefault();
+
+    	var post_id = obj.find("#post_id").val();
+    	var body = obj.find("#body").val();
+    	var token = obj.find("[name=_token]").val();
+
+    	var urlroute = obj.attr("action");
+
+    	$.ajax({
+    		url: urlroute,
+    		type: 'POST',
+    		dataType: "JSON",
+    		data: {
+    			"body" : body,
+    			"post_id" : post_id,
+    			"_token" : token,
+    		},
+    		success: function (msg) 
+    		{
+    			console.log(msg);
+    		}
+
+
+    	})
     }
 
 

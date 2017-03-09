@@ -56,7 +56,10 @@ class CommentsController extends Controller
 
         //redirect
 
-        return back();
+        // return back();
+        return response()->json([
+            'success' => 'Record has been create successfully!'
+        ]);
 
     }
 
