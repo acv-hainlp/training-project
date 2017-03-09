@@ -106,6 +106,7 @@
     		},
     		success: function (msg) 
     		{
+    			obj.parents(".post").append(msg.html);
     			console.log(msg);
     		}
 

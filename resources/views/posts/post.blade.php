@@ -1,4 +1,4 @@
-<div class="w3-margin-top w3-round w3-border w3-white" id="post-{{ $post->id }}">
+<div class="w3-margin-top w3-round w3-border w3-white post" id="post-{{ $post->id }}">
 		<div class="w3-bar">
 			<a class="w3-bar-item" style="padding-top: 20px">
 				<img src="{{$post->user->avatar_url}}" height="50px">

@@ -48,7 +48,7 @@ class CommentsController extends Controller
 
         //store comment
 
-        Comment::create([
+        $comment = Comment::create([
             'body' => request('body'),
             'post_id' => request('post_id'),
             'user_id' => auth()->id(),
@@ -56,9 +56,12 @@ class CommentsController extends Controller
 
         //redirect
 
+        $html = view('posts.commenttemp', compact('comment'))->render();
+
         // return back();
         return response()->json([
-            'success' => 'Record has been create successfully!'
+            'success' => 'Record has been create successfully!',
+            'html' => $html,
         ]);
 
     }

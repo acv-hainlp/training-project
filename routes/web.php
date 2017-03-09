@@ -135,3 +135,14 @@ Route::get('/csv','CsvController@excel')->name('csv'); //test excel
 
 //     return View::make('welcome')->with('tasks',$tasks);
 // });
+
+// Test Render view
+// Route::get('render',function ()
+// {		
+// 	$comment = App\Comment::first();
+// 	$html = view('posts.commenttemp',compact('comment'))->render();
+// 	dd($html);
+// 	// return view('posts.commenttemp',compact('comment'));
+
+	
+// });
