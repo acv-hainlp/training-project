@@ -36,7 +36,7 @@
 						<form action="{{ route('comments.destroy', ['id' => $comment->id]) }}" method="post" class="w3-right">
 							{{method_field('DELETE')}}
 							{{ csrf_field() }}
-							<a href="{{ route('posts.destroy',['id'=>$post->id]) }}" onclick="confirmbox(event);this.parentNode.submit()" ><i class="fa fa-trash-o "></i></a>
+							<a href="#" onclick="confirmbox(event);this.parentNode.submit();"><i class="fa fa-trash-o "></i></a>
 						</form>	
 						@endif
 					@endif
