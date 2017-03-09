@@ -62,7 +62,7 @@
 			<div class="w3-container w3-padding-bottom">
 				<hr>
 				<a href="#" class=""><i class="fa fa-thumbs-o-up"></i>&nbsp;Like</a>&nbsp;
-				<a href="#" onclick="showCommentInput();"><i class="fa fa-comment-o"></i>&nbsp;Comment</a>
+				<a href="#" onclick="showCommentInput(event,$(this));"><i class="fa fa-comment-o"></i>&nbsp;Comment</a>
 			@if(Auth::check())	
 				@if (Auth::user()->id == $post->user->id || Auth::user()->role_id == 1)
 				<form action="{{ route('posts.destroy',['id'=>$post->id]) }}" method="post" class="w3-right">
@@ -78,7 +78,7 @@
 
 				@if(Auth::check())
 				<!-- Input Comment -->
-				<form class="w3-row w3-margin-top" id="comment" action="{{ route('comments.store')}}" method="post" >
+				<form class="w3-row w3-margin-top" id="comment" action="{{ route('comments.store')}}" method="post" hidden>
 					{{csrf_field()}}
 					<input type="text" name="post_id" value="{{$post->id}}" hidden>
 					<input type="text" name="body" name="comment" placeholder="Your comment is here" class="w3-input w3-twothird w3-border">
@@ -123,8 +123,9 @@
       document.getElementById("fileInput").click();
    }
 
-   function showCommentInput ()
-   {
-
+   function showCommentInput(event,obj)
+   {	
+   		event.preventDefault();
+   		obj.parent().find(".w3-row").toggle();
    }
 </script>
