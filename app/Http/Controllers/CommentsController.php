@@ -110,6 +110,9 @@ class CommentsController extends Controller
     {
         Comment::destroy($id);
 
-        return back();
+        // return back();
+        return response()->json([
+            'suscess'=> 'Comment Delete Complete',
+        ]);
     }
 }

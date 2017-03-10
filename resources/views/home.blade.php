@@ -109,11 +109,34 @@
     			obj.parents(".post").append(msg.html);
     			console.log(msg);
     		}
-
-
     	})
     }
 
+    function deleteComment(event,obj) {
+    	event.preventDefault();
+    	console.log('comment delete');
+
+    	var urlroute = obj.attr("href");
+    	var token = obj.data("token");
+    	var id = obj.data("id")
+
+    	$.ajax({
+    		url: urlroute,
+    		type: 'DELETE',
+    		dataType: 'JSON',
+    		data:{
+    			"method": 'DELETE',
+    			"_token": token,
+    		},
+
+    		success: function (msg) {
+    			obj.parents(".comment").hide(500,function() {
+    				this.remove
+    			})
+    			console.log(msg);
+    		}
+    	});
+    }
 
    
 </script>
