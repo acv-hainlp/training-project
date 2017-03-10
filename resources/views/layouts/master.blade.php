@@ -50,13 +50,7 @@
 </html>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script>
- 	function confirmbox(event){
-		var r = confirm("Do you want confirm this action?");
-		if (r == false) {
-			event.preventDefault();
-		}
-	}
-</script>
+<script src="/js/common.js"></script>
+
 
 @yield('script')

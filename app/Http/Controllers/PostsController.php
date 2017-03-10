@@ -88,7 +88,12 @@ class PostsController extends Controller
         $post->save();
 
         //redirect
-        return back();
-
+        // return back();
+        
+        return response()->json([
+                'success'=> 'Update successfully',
+                'body' => $post->body,
+            ]);
+        
     }
 }

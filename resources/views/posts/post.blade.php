@@ -31,7 +31,7 @@
 					<a href="#"  onclick="confirmbox(event);this.parentNode.submit()" class="w3-right" style="margin-right: 16px"><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp;</a>
 					<!-- <button class="w3-button w3-right" type="submit" onclick="confirmbox(event)">Delete</button> -->
 				<!-- </form> -->
-					<a href="#" class="w3-right"><i class="fa fa-edit "></i>&nbsp;Edit</a>
+					<a href="{{ route('posts.show', ['id'=>$post->id])}}" class="w3-right"><i class="fa fa-edit "></i>&nbsp;Edit</a>
 
 					<a href="{{ route('posts.show',['id'=>$post->id ])}}" onclick="deletePost(event,$(this))" data-id="{{ $post->id }}" class="w3-right w3-margin-right" data-token="{{ csrf_token() }}" ><i class="fa fa-trash-o"></i>&nbsp;Delete</a>&nbsp;
 

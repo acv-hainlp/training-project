@@ -4,7 +4,7 @@
 
 @section('content')
 
-	<div class="w3-margin-top w3-round w3-border w3-white">
+	<div class="w3-margin-top w3-round w3-border w3-white post">
 		<div class="w3-bar">
 			<a class="w3-bar-item" style="padding-top: 20px">
 				<img src="{{$post->user->avatar_url}}" height="50px">
@@ -14,7 +14,7 @@
 				<span><i>{{ $post->created_at->diffForHumans() }}</i></b></span>
 			</a>
 		</div>
-		<div class="w3-container">
+		<div class="w3-container post-body">
 			<p>{{ $post->body }}</p>
 		</div>
 
@@ -28,11 +28,10 @@
 
 			
 		<div class="w3-border w3-round">
-		<form action="{{	route('posts.update', ['id'=>$post->id] )}}" method="post">
-			{{ method_field('PATCH') }}
+		<form action="{{route('posts.update', ['id'=>$post->id] )}}" onsubmit="editPost(event,$(this));">
 			{{csrf_field()}}
 
-			<textarea class="w3-input w3-border w3-border-0" placeholder="Write Something.." name="body"></textarea>
+			<textarea class="w3-input w3-border w3-border-0" placeholder="Write Something.." name="body" id="body"></textarea>
 
 			<footer class="w3-container w3-display-container w3-padding-4" >
 			<input class="w3-btn w3-blue w3-right w3-small w3-round" type="submit" value="Update">
