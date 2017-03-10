@@ -76,7 +76,13 @@ function editPost(event,obj) {
 				obj.parents(".post").find(".post-body > p").text(msg.body);
 				obj.parents(".post").find(".post-body > p").show(500);
 				console.log(msg);
-			}
+			},
+
+			error: function(msg){
+	        	var errors = msg.responseJSON;
+	        	$("#errors > p").text(errors.body);
+	        	$("#errors").fadeIn(500);
+	        }
 		});
 	}
 }
